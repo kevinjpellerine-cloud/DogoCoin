@@ -1,0 +1,25 @@
+name: Deploy Solana Memecoin
+
+on:
+  workflow_dispatch: # Allows you to trigger the launch manually with a single click
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install Solana Libraries
+      run: npm install
+
+    - name: Run Deployment Script
+      env:
+        TSOL_PRIVATE_KEY: ${{ secrets.TSOL_PRIVATE_KEY }}
+      run: node deploy.js
